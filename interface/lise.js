@@ -2,9 +2,9 @@ const multer  = require('multer');
 const path = require('path');
 const { spawn } = require('child_process');
 const { abort } = require('process');
-const ENV_PATH = "/usr/local/bin/python3";
-const LISE_PATH = "/Users/isaacmartinez/Desktop/LISEPROJECT/apiserver/LISE";
-const PROJECT_PATH = "/Users/isaacmartinez/Desktop/LISEPROJECT"
+const ENV_PATH = "/usr/bin/python3";
+const LISE_PATH = "/var/www/CDDL-Server/interface/LISE";
+const PROJECT_PATH = "/var/www/CDDL-Server/interface"
 
 const storage = multer.diskStorage({
     //Specifies the folder tmp as the location to store uploaded files, 
