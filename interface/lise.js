@@ -3,7 +3,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const { abort } = require('process');
 const ENV_PATH = "/usr/bin/python3";
-const LISE_PATH = "/var/www/CDDL-Server/interface/LISE";
+const LISE_PATH = "/var/www/CDDL-Server/LISE";
 const PROJECT_PATH = "/var/www/CDDL-Server/interface"
 
 const storage = multer.diskStorage({
@@ -54,15 +54,17 @@ module.exports = (app) => {
             });
 
             c.on('exit', (code) => {
-                console.log(`c process exited with code: ${code}`);
-                res.download(path.join(PROJECT_PATH, `results`, `${id}_top10.pdb`), `${id}_top10.pdb`, (err) => {
-                    if (err) {
-                        console.log(`Error sending file: ${err}`);
-                        res.end()
-                    } else {
-                        console.log(`Sent: ${id}.pdb`);
-                    }
-                });
+                console.log(`C process exited with code: ${code}`);
+                if (code != 2) {
+                    res.download(path.join(PROJECT_PATH, `results`, `${id}_top10.pdb`), `${id}_top10.pdb`, (err) => {
+                        if (err) {
+                            console.log(`Error sending file: ${err}`);
+                            res.end()
+                        } else {
+                            console.log(`Sent: ${id}.pdb`);
+                        }
+                    });
+                }
             });
 
         } catch (err) {

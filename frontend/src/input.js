@@ -15,14 +15,14 @@ export default class Input extends React.Component {
   }
 
   fetchFile = async () => {
-    fetch("http://34.200.71.31/lise/" + this.state.value)
+    fetch("http://34.200.71.31:81/lise/" + this.state.value)
     .then((response) => response.blob())
     // .then((myBlob) => {
     //  const fileObjectURL = URL.createObjectURL(myBlob);
     //  const nurl = new URL(fileObjectURL);
     //  return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
     //
-    .then((nurl) => this.setState({url: this.state.value.toUpperCase() + ".pdb"}));
+    .then((nurl) => this.setState({url: this.state.value.toUpperCase() + "_top10.pdb"}));
   };
 
   handleSubmit(event) {
