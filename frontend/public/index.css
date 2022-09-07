@@ -1,7 +1,16 @@
 .display{
-    width: 300px;
-    height: 100px;
+    width: 500px;
+    height: 500px;
     margin: 100;
     padding: 50px;
     border: 10px solid black;
+}
+
+#frame1{
+    float: left;
+    margin-right: 8px;
+}
+
+#frame2{
+    margin-left: 516px;
 }
