@@ -22,7 +22,7 @@ export default class Input extends React.Component {
     //  const nurl = new URL(fileObjectURL);
     //  return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
     //
-    .then((nurl) => this.setState({url: this.state.value.toUpperCase() + "_top10.pdb"}));
+    .then((nurl) => this.setState({url: this.state.value.toUpperCase()}));
   };
 
   handleSubmit(event) {

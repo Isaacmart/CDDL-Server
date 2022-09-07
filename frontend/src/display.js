@@ -26,7 +26,9 @@ export default class Display extends React.Component {
             height: 300,
             width: 300,
             use: "HTML5",
-            script: `load results/${this.props.file}`,
+            script: `set appendNew false; 
+                     load results/${this.props.file}.pdb; 
+                     load APPEND results/${this.props.file}_top10.pdb`,
             j2sPath: "jmol-14.32.63/jsmol/j2s",
             jarFile: "JmolApplet0.jar",
             serverURL: "http://localhost:3000/jmol-14.32.63/jsmol/php/jsmol.php"
