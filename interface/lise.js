@@ -25,47 +25,20 @@ module.exports = (app) => {
         //Connects to LISE service with a pdb file
 
         try {
-            //Executes the LISE program 
-            var id = req.params[0].toUpperCase();
+            var pdb = req.params[0].toUpperCase();
 
             upload.single('file');
 
-            const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${id}`], { timeout:60000 });
-            const c = spawn(path.join(LISE_PATH, "a.out"), { timeout:60000 });
-
-            py.stdout.on('data', (data) => {
-                c.stdin.write(data);
-            });
-
-            py.stderr.on('data', (data) => {
-                console.error(`py stderr: ${data}`);
-            });
-
-            py.on('close', (code) => {
-                c.stdin.end();
-            });
-
-            c.stderr.on('data', (data) => {
-                console.error(`c stderr: ${data}`);
-            });
-
-            c.stdout.on('data', (data) => {
-                console.log(data.toString());
-            });
-
-            c.on('exit', (code) => {
-                console.log(`C process exited with code: ${code}`);
-                if (code != 2) {
-                    res.download(path.join(PROJECT_PATH, `results`, `${id}_top10.pdb`), `${id}_top10.pdb`, (err) => {
-                        if (err) {
-                            console.log(`Error sending file: ${err}`);
-                            res.end()
-                        } else {
-                            console.log(`Sent: ${id}.pdb`);
-                        }
-                    });
-                }
-            });
+            if (run_LISE(pdb) != 2) {
+                res.download(path.join(PROJECT_PATH, `results`, `${pdb}_top10.pdb`), `${pdb}_top10.pdb`, (err) => {
+                    if (err) {
+                        console.log(`Error sending file: ${err}`);
+                        res.end()
+                    } else {
+                        console.log(`Sent: ${pdb}.pdb`);
+                    }
+                });
+            }
 
         } catch (err) {
             console.error(`Request error: ${err}`);
@@ -78,4 +51,38 @@ module.exports = (app) => {
         res.status(200);
         console.log(req.params.id);
     });
+}
+
+
+function run_LISE(pdb) {
+    //Executes the LISE program 
+
+    const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`], { timeout:60000 });
+    const c = spawn(path.join(LISE_PATH, "a.out"), { timeout:60000 });
+
+    py.stdout.on('data', (data) => {
+        c.stdin.write(data);
+    });
+
+    py.stderr.on('data', (data) => {
+        console.error(`py stderr: ${data}`);
+    });
+
+    py.on('close', (code) => {
+        c.stdin.end();
+    });
+
+    c.stderr.on('data', (data) => {
+        console.error(`c stderr: ${data}`);
+    });
+
+    c.stdout.on('data', (data) => {
+        console.log(data.toString());
+    });
+
+    c.on('exit', (code) => {
+        console.log(`C process exited with code: ${code}`);
+        return code;
+    });
+
 }
