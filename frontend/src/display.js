@@ -21,14 +21,16 @@ export default class Display extends React.Component {
          var result = "results/" + this.props.file + "_top10.pdb";
          var detail = "details/" + this.props.file + "_top3.pdb"; 
 
-         var rsc = "set appendNew false; background black; load " + pdb + 
-                     "; cartoon only; color structure; load APPEND " + detail + ";";
+         var rsc = "background black; load " + pdb + 
+                     "; cartoon only; color structure; load APPEND " + detail + 
+                     "; frame *; display 1.1,2.1; select 2.1; cpk only; color relativeTemperature; set spinY 5; spin";
          var Info = getInfo(rsc);
          var myJmol = Jmol.getAppletHtml("myJmol", Info);
          document.getElementById("frame1").innerHTML = myJmol;
 
-         var dsc = "set appendNew false; background black; set echo bottom left; load " + pdb + 
-                     "; cartoon only; color structure; load APPEND " + result + ";";
+         var dsc = "background black; set echo bottom left; load " + pdb + 
+                     "; cartoon only; color structure; load APPEND " + result + 
+                     "; frame *; display 1.1,2.1; select 2.1; cpk only; color relativeTemperature; set spinY 5; spin";
          var Info2 = getInfo(dsc);
          var myJmol2 = Jmol.getAppletHtml("myJmol2", Info2);
          document.getElementById("frame2").innerHTML = myJmol2;
