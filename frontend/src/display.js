@@ -23,12 +23,12 @@ export default class Display extends React.Component {
 
          var rsc = "background black; load " + pdb + 
                      "; cartoon only; color structure; load APPEND " + detail + 
-                     "; frame *; display 1.1,2.1; select 2.1; cpk only; color relativeTemperature; set spinY 5; spin";
+                     "; frame *; display 1.1,2.1; select 2.1; spacefill only; spacefill 100; color relativeTemperature; set spinY 5; spin";
          var Info = getInfo(rsc);
          var myJmol = Jmol.getAppletHtml("myJmol", Info);
          document.getElementById("frame1").innerHTML = myJmol;
 
-         var dsc = "background black; set echo bottom left; load " + pdb + 
+         var dsc = "background black; load " + pdb + 
                      "; cartoon only; color structure; load APPEND " + result + 
                      "; frame *; display 1.1,2.1; select 2.1; cpk only; color relativeTemperature; set spinY 5; spin";
          var Info2 = getInfo(dsc);
