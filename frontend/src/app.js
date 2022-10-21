@@ -6,8 +6,8 @@ export default class App extends React.Component {
    render() {
       return (
          <>
-            <div>
-               <h1>UGA CDDL LISE</h1>
+            <div class="labheader">
+               <h1>Computational Drug Discovery Laboratory </h1>
             </div>
             <Input />
          </>

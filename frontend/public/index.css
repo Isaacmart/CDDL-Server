@@ -14,3 +14,21 @@
 #frame2{
     margin-left: 516px;
 }
+
+#ugahead {
+    width: 280px;
+    height: 85px;
+}
+
+.labfooter {
+    box-sizing: border-box;
+    padding: 100px 0;
+    border-width: 4px 0 0;
+    border-style: solid;
+    background: url(https://www.uga.edu/img/background-arch.90a37034.jpg) #000 50% no-repeat;
+    background-size: cover;
+}
+
+.labheader {
+    font-family: Oswald,Impact,Arial Narrow,Helvetica Neue;
+}
