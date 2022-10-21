@@ -6,9 +6,9 @@ const { read } = require('fs');
 const { connect } = require('http2');
 const { resolve } = require('path');
 const { rejects } = require('assert');
-const ENV_PATH = "/Users/isaacmartinez/opt/anaconda3/envs/py3XF/bin/python";
-const LISE_PATH = "/Users/isaacmartinez/Desktop/CDDL-Server/LISE";
-const PROJECT_PATH = "/Users/isaacmartinez/Desktop/CDDL-Server/interface";
+const ENV_PATH = "/home/admin/anaconda3/bin/python3";
+const LISE_PATH = "/var/www/CDDL-Server/LISE";
+const PROJECT_PATH = "/var/www/CDDL-Server/interface";
 
 const storage = multer.diskStorage({
     //Specifies the folder tmp as the location to store uploaded files, 
