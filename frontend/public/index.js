@@ -3242,11 +3242,13 @@
 	        var pdb = "PDB/" + this.props.file + ".pdb";
 	        var result = "results/" + this.props.file + "_top10.pdb";
 	        var detail = "details/" + this.props.file + "_top3.pdb";
-	        var rsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + detail + "; frame *; display 1.1,2.1; select 2.1; spacefill only; spacefill 100; color relativeTemperature; set spinY 5; spin";
+	        var ilig = "iligs/" + this.props.file + "_temp.pdb";
+	        var rsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + detail + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; spacefill only; spacefill 100; color relativeTemperature" + "; select 3.1; cpk only; cpk 150" + "; set spinY 5; spin";
 	        var Info = getInfo(rsc);
 	        var myJmol = Jmol.getAppletHtml("myJmol", Info);
 	        document.getElementById("frame1").innerHTML = myJmol;
-	        var dsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + result + "; frame *; display 1.1,2.1; select 2.1; cpk only; color relativeTemperature; set spinY 5; spin";
+	        var scheme = '\"myScheme=[xF5F5DC][x8A2BE2][xD2691E][x006400][x1E90FF][x00008B][x7CFC00][x7FFF00][xFF8C00][xFF0000]\"';
+	        var dsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + result + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; cpk only; color " + scheme + "; color {2.1} property atomno \"myScheme\" range 1 10" + "; select 3.1; cpk only; cpk 150" + "; set spinY 5; spin";
 	        var Info2 = getInfo(dsc);
 	        var myJmol2 = Jmol.getAppletHtml("myJmol2", Info2);
 	        document.getElementById("frame2").innerHTML = myJmol2;

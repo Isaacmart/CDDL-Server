@@ -1,10 +1,14 @@
 const multer  = require('multer');
 const path = require('path');
-const { spawn } = require('child_process');
-const { abort } = require('process');
-const ENV_PATH = "/usr/bin/python3";
-const LISE_PATH = "/var/www/CDDL-Server/LISE";
-const PROJECT_PATH = "/var/www/CDDL-Server/interface"
+const { spawn, spawnSync } = require('child_process');
+const { abort, pid } = require('process');
+const { read } = require('fs');
+const { connect } = require('http2');
+const { resolve } = require('path');
+const { rejects } = require('assert');
+const ENV_PATH = "/Users/isaacmartinez/opt/anaconda3/envs/py3XF/bin/python";
+const LISE_PATH = "/Users/isaacmartinez/Desktop/CDDL-Server/LISE";
+const PROJECT_PATH = "/Users/isaacmartinez/Desktop/CDDL-Server/interface";
 
 const storage = multer.diskStorage({
     //Specifies the folder tmp as the location to store uploaded files, 
@@ -21,7 +25,7 @@ const upload = multer({ storage: storage});
 
 module.exports = (app) => {
 
-    app.get(/^\/lise\/(?:(\d\w{3}))\/?$/i, async (req, res, next) => {
+    app.get(/^\/lise\/(?:(\d\w{3}))\/?$/i, async (req, res) => {
         //Connects to LISE service with a pdb file
 
         try {
@@ -29,13 +33,16 @@ module.exports = (app) => {
 
             upload.single('file');
 
-            if (run_LISE(pdb) != 2) {
+            var lise_code = await run_LISE(pdb);
+
+            if (lise_code != 2) {
+
                 res.download(path.join(PROJECT_PATH, `results`, `${pdb}_top10.pdb`), `${pdb}_top10.pdb`, (err) => {
                     if (err) {
-                        console.log(`Error sending file: ${err}`);
-                        res.end()
+                        console.log(`Error sending file: ${path.join(PROJECT_PATH, `results`, `${pdb}_top10.pdb`)}`);
+                        res.end();
                     } else {
-                        console.log(`Sent: ${pdb}.pdb`);
+                        console.log(`Sent: ${pdb}_top10.pdb`);
                     }
                 });
             }
@@ -53,36 +60,46 @@ module.exports = (app) => {
     });
 }
 
-
 function run_LISE(pdb) {
     //Executes the LISE program 
 
-    const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`], { timeout:60000 });
-    const c = spawn(path.join(LISE_PATH, "a.out"), { timeout:60000 });
+    return new Promise((resolve, reject) => {
 
-    py.stdout.on('data', (data) => {
-        c.stdin.write(data);
-    });
+        const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`], {
+            timeout: 60000
+        });
+    
+        const c = spawn(path.join(LISE_PATH, "a.out"), {
+            timeout: 120000
+        });
 
-    py.stderr.on('data', (data) => {
-        console.error(`py stderr: ${data}`);
-    });
+        py.stdout.on('data', (data) => {
+            c.stdin.write(data);
+            console.log(data.toString())
+        });
 
-    py.on('close', (code) => {
-        c.stdin.end();
-    });
+        py.stderr.on('data', (data) => {
+            console.log(data.toString());
+        });
 
-    c.stderr.on('data', (data) => {
-        console.error(`c stderr: ${data}`);
-    });
+        py.on('close', (code) => {
+            c.stdin.end();
+        });
 
-    c.stdout.on('data', (data) => {
-        console.log(data.toString());
-    });
+        c.stderr.on('data', (data) => {
+            console.error(data.toString());
+            reject(2);
+        })
 
-    c.on('exit', (code) => {
-        console.log(`C process exited with code: ${code}`);
-        return code;
-    });
+        c.stdout.on('data', (data) => {
+            console.log(data.toString());
+        });
+    
+        c.on('exit', (code) => {
+            console.log(`C process exited with code: ${code}`);
+            resolve(code);
+        });
 
+
+    })
 }
