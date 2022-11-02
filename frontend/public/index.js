@@ -3243,11 +3243,11 @@
 	        var result = "results/" + this.props.file + "_top10.pdb";
 	        var detail = "details/" + this.props.file + "_top3.pdb";
 	        var ilig = "iligs/" + this.props.file + "_temp.pdb";
-	        var rsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + detail + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; spacefill only; spacefill 100; color relativeTemperature" + "; select 3.1; wireframe only; wireframe 50" + "; set spinY 5; spin";
+	        var rsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + detail + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; spacefill only; spacefill 50; color relativeTemperature" + "; select 3.1; wireframe 75; set rangeSelected on {2.1}; color {3.1} relativeTemperature" + "; set spinY 5; spin";
 	        var Info = getInfo(rsc);
 	        var myJmol = Jmol.getAppletHtml("myJmol", Info);
 	        document.getElementById("frame1").innerHTML = myJmol;
-	        var dsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + result + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; cpk only" + "; var index = 0; for (var i in {2.1}){i.temperature = index; index = index + 10}; color {2.1} fixedTemperature" + "; select 3.1; wireframe only; wireframe 50" + "; set spinY 5; spin";
+	        var dsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + result + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; cpk only" + "; var index = 100; for (var i in {2.1}){i.temperature = index; index = index - 10}; color {2.1} fixedTemperature" + "; select 3.1; wireframe 75; set rangeSelected on {2.1}; color {3.1} relativeTemperature" + "; set spinY 5; spin";
 	        var Info2 = getInfo(dsc);
 	        var myJmol2 = Jmol.getAppletHtml("myJmol2", Info2);
 	        document.getElementById("frame2").innerHTML = myJmol2;
