@@ -3305,12 +3305,12 @@
 	        while (1) {
 	          switch (_context.prev = _context.next) {
 	            case 0:
-	              fetch("http://34.200.71.31:81/lise/" + _this.state.value).then(function (response) {
+	              fetch("http://10.184.50.69:3100/lise/" + _this.state.value).then(function (response) {
 	                return response.blob();
 	              }) // .then((myBlob) => {
-	              //  const fileObjectURL = URL.createObjectURL(myBlob);
-	              //  const nurl = new URL(fileObjectURL);
-	              //  return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
+	              // const fileObjectURL = URL.createObjectURL(myBlob);
+	              // const nurl = new URL(fileObjectURL);
+	              // return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
 	              //
 	              .then(function (nurl) {
 	                return _this.setState({

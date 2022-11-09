@@ -6,7 +6,7 @@ const { read } = require('fs');
 const { connect } = require('http2');
 const { resolve } = require('path');
 const { rejects } = require('assert');
-const ENV_PATH = "~/opt/anaconda3/envs/py3XF/bin/python";
+const ENV_PATH = "/Users/isaacmartinez/opt/anaconda3/envs/py3XF/bin/python3";
 const LISE_PATH = "/Users/isaacmartinez/Desktop/CDDL-Server/LISE";
 const PROJECT_PATH = "/Users/isaacmartinez/Desktop/CDDL-Server/interface";
 
@@ -30,8 +30,6 @@ module.exports = (app) => {
 
         try {
             var pdb = req.params[0].toUpperCase();
-
-            upload.single('file');
 
             var lise_code = await run_LISE(pdb);
 
@@ -65,13 +63,10 @@ function run_LISE(pdb) {
 
     return new Promise((resolve, reject) => {
 
-        const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`], {
-            timeout: 60000
-        });
+
+        const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`]);
     
-        const c = spawn(path.join(LISE_PATH, "a.out"), {
-            timeout: 120000
-        });
+        const c = spawn(path.join(LISE_PATH, "a.out"));
 
         py.stdout.on('data', (data) => {
             c.stdin.write(data);
@@ -82,13 +77,9 @@ function run_LISE(pdb) {
             console.log(data.toString());
         });
 
-        py.on('close', (code) => {
-            c.stdin.end();
-        });
-
         c.stderr.on('data', (data) => {
             console.error(data.toString());
-            reject(2);
+            //reject(c.exitCode);
         })
 
         c.stdout.on('data', (data) => {
