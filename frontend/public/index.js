@@ -3305,7 +3305,7 @@
 	        while (1) {
 	          switch (_context.prev = _context.next) {
 	            case 0:
-	              fetch("http://10.184.50.69:3100/lise/" + _this.state.value).then(function (response) {
+	              fetch("http://localhost:3100/lise/" + _this.state.value).then(function (response) {
 	                return response.blob();
 	              }) // .then((myBlob) => {
 	              // const fileObjectURL = URL.createObjectURL(myBlob);

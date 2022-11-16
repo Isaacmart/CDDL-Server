@@ -63,29 +63,36 @@ function run_LISE(pdb) {
 
     return new Promise((resolve, reject) => {
 
+        const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`], {
+            timeout: 60000
+        });
 
-        const py = spawn(ENV_PATH, [path.join(LISE_PATH, "prep.py"), '-i', `${pdb}`]);
-    
-        const c = spawn(path.join(LISE_PATH, "a.out"));
+        const c = spawn(path.join(LISE_PATH, "a.out"), {
+            timeout: 180000
+        });
 
         py.stdout.on('data', (data) => {
             c.stdin.write(data);
-            console.log(data.toString())
+            console.log(data.toString());
         });
 
         py.stderr.on('data', (data) => {
             console.log(data.toString());
         });
 
+        py.stdin.on('close', (code) => {
+            c.stdin.end();
+            console.log(`Py process exited with code ${code}`);
+        });
+
         c.stderr.on('data', (data) => {
             console.error(data.toString());
-            //reject(c.exitCode);
         })
 
         c.stdout.on('data', (data) => {
             console.log(data.toString());
         });
-    
+
         c.on('exit', (code) => {
             console.log(`C process exited with code: ${code}`);
             resolve(code);

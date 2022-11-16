@@ -15,7 +15,7 @@ export default class Input extends React.Component {
   }
 
   fetchFile = async () => {
-    fetch("http://10.184.50.69:3100/lise/" + this.state.value)
+    fetch("http://localhost:3100/lise/" + this.state.value)
     .then((response) => response.blob())
     // .then((myBlob) => {
     // const fileObjectURL = URL.createObjectURL(myBlob);
