@@ -2,8 +2,6 @@ import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
-import serve from 'rollup-plugin-serve';
-import livereload from 'rollup-plugin-livereload';
 import postcss from 'rollup-plugin-postcss'
 
 export default {
@@ -13,6 +11,9 @@ export default {
       format: 'iife',
    },
    plugins: [
+      replace({
+         'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
       commonjs({
          include: [
             'node_modules/**',
@@ -25,17 +26,8 @@ export default {
       babel({
          exclude: 'node_modules/**'
       }),
-      replace({
-         'process.env.NODE_ENV': JSON.stringify('production'),
-      }),
       postcss({
          autoModules: true
-      }),
-      livereload('public'),
-      serve({
-         contentBase: 'public',
-         port: 3000,
-         open: true,
-      }), // index.html should be in root of project
+      })
    ]
 }
