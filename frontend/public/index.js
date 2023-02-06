@@ -3192,6 +3192,19 @@
 	      this.setState({
 	        jsmol: Jmol.getApplet("myJmol", Info)
 	      });
+	      document.getElementById("myJmol_appletinfotablediv").remove();
+	      var pdb = "PDB/" + this.props.file + ".pdb";
+	      var result = "results/" + this.props.file + "_top10.pdb";
+	      var detail = "details/" + this.props.file + "_top3.pdb";
+	      var ilig = "iligs/" + this.props.file + "_temp.pdb";
+	      var rsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + detail + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; spacefill only; spacefill 50; color relativeTemperature" + "; select 3.1; wireframe 75; set rangeSelected on {2.1}; color {3.1} relativeTemperature" + "; set spinY 5; spin";
+	      var Info = getInfo(rsc);
+	      var myJmol = Jmol.getAppletHtml("myJmol", Info);
+	      document.getElementById("frame1").innerHTML = myJmol;
+	      var dsc = "background black; load " + pdb + "; cartoon only; color structure; load APPEND " + result + "; load APPEND " + ilig + "; frame *; display 1.1,2.1,3.1" + "; select 2.1; cpk only" + "; var index = 100; for (var i in {2.1}){i.temperature = index; index = index - 10}; color {2.1} fixedTemperature" + "; select 3.1; wireframe 75; set rangeSelected on {2.1}; color {3.1} relativeTemperature" + "; set spinY 5; spin";
+	      var Info2 = getInfo(dsc);
+	      var myJmol2 = Jmol.getAppletHtml("myJmol2", Info2);
+	      document.getElementById("frame2").innerHTML = myJmol2;
 	    }
 	  }, {
 	    key: "componentDidUpdate",
@@ -3264,14 +3277,14 @@
 	        while (1) {
 	          switch (_context.prev = _context.next) {
 	            case 0:
-	              fetch("http://localhost:3100/lise/" + _this.state.value).then(function (response) {
+	              fetch("http://34.200.71.31:81/lise/" + _this.state.value).then(function (response) {
 	                return response.blob();
 	              }) // .then((myBlob) => {
 	              // const fileObjectURL = URL.createObjectURL(myBlob);
 	              // const nurl = new URL(fileObjectURL);
 	              // return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
 	              //
-	              .then(function (nurl) {
+	              .then(function (url) {
 	                return _this.setState({
 	                  url: _this.state.value.toUpperCase()
 	                });
@@ -3286,7 +3299,7 @@
 	    })));
 
 	    _this.state = {
-	      value: '',
+	      value: '1a6w',
 	      url: ''
 	    };
 	    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -3352,9 +3365,7 @@
 	  _createClass(App, [{
 	    key: "render",
 	    value: function render() {
-	      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-	        class: "labheader"
-	      }, /*#__PURE__*/React.createElement("h1", null, "Computational Drug Discovery Laboratory ")), /*#__PURE__*/React.createElement(Input, null));
+	      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Input, null));
 	    }
 	  }]);
 

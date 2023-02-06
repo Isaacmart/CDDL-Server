@@ -17,11 +17,6 @@ export default class Input extends React.Component {
   fetchFile = async () => {
     fetch("http://34.200.71.31:81/lise/" + this.state.value)
     .then((response) => response.blob())
-    // .then((myBlob) => {
-    // const fileObjectURL = URL.createObjectURL(myBlob);
-    // const nurl = new URL(fileObjectURL);
-    // return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
-    //
     .then((url) => this.setState({url: this.state.value.toUpperCase()}));
   };
 
