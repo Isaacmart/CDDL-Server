@@ -4,7 +4,7 @@ import Display from "./display";
 export default class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', url:''};
+    this.state = {value: '1a6w', url:''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,14 +15,14 @@ export default class Input extends React.Component {
   }
 
   fetchFile = async () => {
-    fetch("http://localhost:3100/lise/" + this.state.value)
+    fetch("http://34.200.71.31:81/lise/" + this.state.value)
     .then((response) => response.blob())
     // .then((myBlob) => {
     // const fileObjectURL = URL.createObjectURL(myBlob);
     // const nurl = new URL(fileObjectURL);
     // return nurl; nurl.pathname.replace(nurl.origin, '').replace('/', '')})
     //
-    .then((nurl) => this.setState({url: this.state.value.toUpperCase()}));
+    .then((url) => this.setState({url: this.state.value.toUpperCase()}));
   };
 
   handleSubmit(event) {
