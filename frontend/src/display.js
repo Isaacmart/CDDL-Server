@@ -9,8 +9,6 @@ export default class Display extends React.Component {
    };
 
    componentDidMount() {
-      console.log("mounting with file:");
-      console.log(this.props.file);
       jmolInitialize('jmol-14.32.63/jsmol');
 
       var pdb = "PDB/" + this.props.file + ".pdb";
@@ -20,12 +18,12 @@ export default class Display extends React.Component {
 
       const rsc = getRSC(pdb, detail, ilig);
       const Info = getInfo(rsc);
-      var myJmol = Jmol.getApplet("myJmol", Info);
+      var myJmol = Jmol.getAppletHtml("myJmol", Info);
       document.getElementById("frame1").innerHTML = myJmol;
 
       const dsc  = getDSC(pdb, result, ilig);
       var Info2 = getInfo(dsc);
-      var myJmol2 = Jmol.getApplet("myJmol2", Info2);
+      var myJmol2 = Jmol.getAppletHtml("myJmol2", Info2);
       document.getElementById("frame2").innerHTML = myJmol2;
    }
 
