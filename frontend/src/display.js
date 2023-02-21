@@ -20,13 +20,11 @@ export default class Display extends React.Component {
 
       const rsc = getRSC(pdb, detail, ilig);
       const Info = getInfo(rsc);
-      var myJmol = Jmol.getAppletHtml("myJmol", Info);
-      document.getElementById("frame1").innerHTML = myJmol;
+      var myJmol = Jmol.getApplet("frame1", Info);
 
       const dsc  = getDSC(pdb, result, ilig);
       var Info2 = getInfo(dsc);
-      var myJmol2 = Jmol.getAppletHtml("myJmol2", Info2);
-      document.getElementById("frame2").innerHTML = myJmol2;
+      var myJmol2 = Jmol.getApplet("frame2", Info2);
    }
 
    componentDidUpdate(prevProps, prevState) {
