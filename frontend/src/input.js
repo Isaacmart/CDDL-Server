@@ -40,7 +40,7 @@ export default class Input extends React.Component {
             <input type="submit" value="Submit" />
           </form>
         </div>
-        <Display file={this.state.value}/>
+        <Display file={this.state.value.toUpperCase()}/>
       </>
     );
   }

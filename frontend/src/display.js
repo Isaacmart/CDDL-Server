@@ -20,11 +20,13 @@ export default class Display extends React.Component {
 
       const rsc = getRSC(pdb, detail, ilig);
       const Info = getInfo(rsc);
-      var myJmol = Jmol.getApplet("frame1", Info);
+      var myJmol = Jmol.getApplet("myJmol", Info);
+      document.getElementById("frame1").innerHTML = myJmol;
 
       const dsc  = getDSC(pdb, result, ilig);
       var Info2 = getInfo(dsc);
-      var myJmol2 = Jmol.getApplet("frame2", Info2);
+      var myJmol2 = Jmol.getApplet("myJmol2", Info2);
+      document.getElementById("frame2").innerHTML = myJmol2;
    }
 
    componentDidUpdate(prevProps, prevState) {
@@ -36,7 +38,7 @@ export default class Display extends React.Component {
          var detail = "details/" + this.props.file + "_top3.pdb"; 
          var ilig  = "iligs/" + this.props.file + "_temp.pdb";
 
-         const src  = getRSC(pdb, detail, ilig);
+         const rsc  = getRSC(pdb, detail, ilig);
          var Info = getInfo(rsc);
          var myJmol = Jmol.getAppletHtml("myJmol", Info);
          document.getElementById("frame1").innerHTML = myJmol;
