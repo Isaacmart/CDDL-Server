@@ -9,9 +9,6 @@ export default class Display extends React.Component {
 
    componentDidMount() {
       jmolInitialize('jmol-14.32.63/jsmol');
-      var Info = getInfo(NaN);
-      this.setState({jsmol: Jmol.getApplet("myJmol", Info)});
-      document.getElementById("myJmol_appletinfotablediv").remove();
 
       var pdb = "PDB/" + this.props.file + ".pdb";
       var result = "results/" + this.props.file + "_top10.pdb";
