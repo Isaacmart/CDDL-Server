@@ -4,7 +4,7 @@ import Display from "./display";
 export default class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '1a6w', url:''};
+    this.state = {value: '1a6w'};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +40,7 @@ export default class Input extends React.Component {
             <input type="submit" value="Submit" />
           </form>
         </div>
-        <Display file={this.state.url}/>
+        <Display file={this.state.value}/>
       </>
     );
   }
