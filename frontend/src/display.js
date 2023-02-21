@@ -9,6 +9,8 @@ export default class Display extends React.Component {
    };
 
    componentDidMount() {
+      console.log("mounting with file:");
+      console.log(this.props.file);
       jmolInitialize('jmol-14.32.63/jsmol');
 
       var pdb = "PDB/" + this.props.file + ".pdb";
